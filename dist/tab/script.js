@@ -102,6 +102,45 @@ const bangs = {
   "!tumblr": "https://www.tumblr.com/search/"
 };
 
+const languageFiles = [
+  "es",
+  "zh",
+  "fr",
+  "de",
+  "pt",
+  "ja",
+  "ru",
+  "ko",
+  "ar",
+  "it",
+  "nl",
+  "sv",
+  "nb",
+  "da",
+  "fi",
+  "pl",
+  "tr",
+  "cs",
+  "he",
+  "hi",
+  "th",
+  "vi",
+  "id",
+  "ms",
+  "ro",
+  "hu",
+  "el",
+  "uk",
+  "bg",
+  "hr",
+  "sk",
+  "lt",
+  "lv",
+  "et",
+  "sl",
+  "sr"
+];
+
 document.querySelector("#searchBar").focus();
 
 document.addEventListener("keydown", (event) => {
@@ -171,66 +210,36 @@ function applyIndent(string, indent) {
   return string.split("\n").map((line) => ((line.trim() === "") ? line : indent + line)).join("\n");
 };
 
-const languageFiles = [
-  "es",
-  "zh",
-  "fr",
-  "de",
-  "pt",
-  "ja",
-  "ru",
-  "ko",
-  "ar",
-  "it",
-  "nl",
-  "sv",
-  "nb",
-  "da",
-  "fi",
-  "pl",
-  "tr",
-  "cs",
-  "he",
-  "hi",
-  "th",
-  "vi",
-  "id",
-  "ms",
-  "ro",
-  "hu",
-  "el",
-  "uk",
-  "bg",
-  "hr",
-  "sk",
-  "lt",
-  "lv",
-  "et",
-  "sl",
-  "sr"
-];
+async function loadDictionary() {
+  if (!languageFiles.includes((navigator.language || "en").split("-")[0])) return {};
 
-async function loadTranslations() {
-  const translations = {};
+  const languageCode = (navigator.language || "en").split("-")[0];
+  const locales = JSON.parse(localStorage.getItem("locales") || "{}");
 
-  for (const file of languageFiles) {
-    const langCode = file;
-    const response = await fetch(chrome.runtime.getURL(`locales/${file}.json`));
-    const data = await response.json();
-    translations[langCode] = data;
-  };
+  if (Object.keys(locales).includes(languageCode)) return locales[languageCode];
 
-  return translations;
+  const response = await fetch(chrome.runtime.getURL(`locales/${languageCode}.json`));
+  const data = await response.json();
+
+  setTimeout(() => {
+    localStorage.setItem("locales", JSON.stringify({
+      ...locales,
+      ...{
+        [languageCode]: data
+      }
+    }));
+  }, 0);
+
+  return data;
 };
 
-loadTranslations().then((translations) => {
-  if ((navigator.language || "en").split("-")[0] !== "en") {
-    document.querySelector("title").textContent = (translations?.[(navigator.language || "en").split("-")[0]] || {})[document.querySelector("title").textContent];
+loadDictionary().then((dictionary) => {
+  if (languageFiles.includes((navigator.language || "en").split("-")[0]) && ((navigator.language || "en").split("-")[0] !== "en")) {
+    document.querySelector("title").textContent = dictionary[document.querySelector("title").textContent];
   };
 
   function translateTextNode(textNode) {
     const originalText = textNode.textContent.trim();
-    const dictionary = translations?.[(navigator.language || "en").split("-")[0]] || {};
 
     if (!dictionary[originalText] || !Object.hasOwn(dictionary, originalText)) return;
 
@@ -240,15 +249,13 @@ loadTranslations().then((translations) => {
   function translateElementNode(elementNode) {
     const originalText = elementNode.placeholder?.trim();
 
-    const dictionary = translations?.[(navigator.language || "en").split("-")[0]] || {};
-
     if (!originalText || !dictionary[originalText] || !Object.hasOwn(dictionary, originalText)) return;
 
     elementNode.placeholder = applyIndent(dictionary[originalText], extractIndent(elementNode.textContent));
   };
 
   function scanAndTranslate(node) {
-    if ((navigator.language || "en").split("-")[0] === "en") return;
+    if (!languageFiles.includes((navigator.language || "en").split("-")[0]) || (navigator.language || "en").split("-")[0] === "en") return;
 
     if (node.nodeType === Node.TEXT_NODE) {
       translateTextNode(node);
