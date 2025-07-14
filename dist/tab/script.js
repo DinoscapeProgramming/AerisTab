@@ -160,11 +160,15 @@ document.querySelector("#searchForm").addEventListener("submit", async (event) =
     const url = new URL(document.querySelector("#searchBar").value);
 
     if (![
-      ...["http:", "https:", "file:", "about:"],
-      ...(!chrome.runtime.getBrowserInfo) ? ["chrome:"] : []
+      ...["http:", "https:", "about:"],
+      ...(!chrome.runtime.getBrowserInfo) ? ["file:", "chrome:"] : []
     ].includes(url.protocol)) throw null;
 
-    if ((url.protocol === "about:") && !/^about:blank\/?$/.test(document.querySelector("#searchBar").value) && ((await chrome.runtime.getBrowserInfo?.())?.name === "Firefox")) throw null;
+    if ((url.protocol === "about:") && !/^about:blank\/?$/.test(document.querySelector("#searchBar").value) && ((await chrome.runtime.getBrowserInfo?.())?.name === "Firefox")) {
+      throw null;
+    };
+    
+    if (/^about:blank\/?$/.test(document.querySelector("#searchBar").value)) return (location.href = document.querySelector("#searchBar").value);
 
     if (["file:", "about:", "chrome:"].includes(url.protocol)) {
       chrome.tabs.create({
