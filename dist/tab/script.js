@@ -156,7 +156,7 @@ document.querySelector("#searchForm").addEventListener("submit", async (event) =
     return window.close();
   };
 
-  if ((document.querySelector("#searchBar").value.length <= 253) && (document.querySelector("#searchBar").value.split(".").length === 2) && document.querySelector("#searchBar").value.split(".").every((label) => /^(?!-)[A-Za-z0-9-]{1,63}(?<!-)$/.test(label))) {
+  if ((document.querySelector("#searchBar").value.length <= 253) && (document.querySelector("#searchBar").value.split(".").length >= 2) && (document.querySelector("#searchBar").value.split(".").length <= 127) && document.querySelector("#searchBar").value.split(".").every((label) => /^(?!-)[A-Za-z0-9-]{1,63}(?<!-)$/.test(label))) {
     let domains = JSON.parse(localStorage.getItem("domains") || "[]");
 
     if (!domains.length) {
@@ -170,7 +170,7 @@ document.querySelector("#searchForm").addEventListener("submit", async (event) =
       }, 0);
     };
 
-    if (domains.includes(document.querySelector("#searchBar").value.split(".")[1].toUpperCase())) return (location.href = `https://${document.querySelector("#searchBar").value}`);
+    if (domains.includes(document.querySelector("#searchBar").value.split(".").at(-1).toUpperCase())) return (location.href = `https://${document.querySelector("#searchBar").value}`);
   };
 
   try {
