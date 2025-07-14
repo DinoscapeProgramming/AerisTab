@@ -18,7 +18,7 @@
   "icons": {
     "360": "icons/360x360.png"
   },
-  "applications": {
+  "browser_specific_settings": {
     "gecko": {
       "id": "{69e84219-8261-4e7f-a21c-1b86850e327f}"
     }
