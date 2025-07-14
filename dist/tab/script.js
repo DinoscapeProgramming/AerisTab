@@ -166,7 +166,7 @@ document.querySelector("#searchForm").addEventListener("submit", (event) => {
         url: document.querySelector("#searchBar").value
       });
 
-      document.querySelector("#searchBar").value = "";
+      window.close();
     } else {
       location.href = document.querySelector("#searchBar").value;
     };
