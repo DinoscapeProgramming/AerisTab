@@ -107,10 +107,10 @@ document.querySelector("#searchBar").focus();
 document.querySelector("#searchForm").addEventListener("submit", (e) => {
   e.preventDefault();
 
-  if (!document.querySelector("#searchBar").value) return;
-
-  const parts = document.querySelector("#searchBar").value.split(" ");
+  const parts = document.querySelector("#searchBar").value.trim().split(" ");
   const bang = parts[0];
+
+  if (!parts.slice(Boolean(bangs.hasOwnProperty(bang))).join(" ")) return;
 
   location.href = ((bangs.hasOwnProperty(bang)) ? bangs[bang] : "https://google.com/search?q=") + encodeURIComponent(parts.slice(Boolean(bangs.hasOwnProperty(bang))).join(" "));
 });
