@@ -2,9 +2,6 @@ if (!location.href.endsWith("?")) {
   location.search = "?";
 };
 
-const windowsPathRegex = /^[a-zA-Z]:\\(?:[^\\/:*?"<>|\r\n]+\\)*[^\\/:*?"<>|\r\n]*$/;
-const unixPathRegex = /^(\/[^\/\0]+)+\/?$/;
-
 const bangs = {
   "!g": "https://www.google.com/search?q=",
   "!ddg": "https://duckduckgo.com/?q=",
@@ -159,7 +156,7 @@ document.addEventListener("keydown", (event) => {
 document.querySelector("#searchForm").addEventListener("submit", (event) => {
   event.preventDefault();
 
-  if (windowsPathRegex.test(document.querySelector("#searchBar").value) || unixPathRegex.test(document.querySelector("#searchBar").value)) {
+  if (((navigator.userAgentData?.platform === "Windows") ? /^[a-zA-Z]:\\(?:[^\\/:*?"<>|\r\n]+\\)*[^\\/:*?"<>|\r\n]*$/ : /^(\/[^\/\0]+)+\/?$/).test(document.querySelector("#searchBar").value)) {
     chrome.tabs.create({
       url: `file:///${document.querySelector("#searchBar").value}`
     });
