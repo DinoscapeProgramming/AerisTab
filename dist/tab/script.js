@@ -145,14 +145,6 @@ const languageFiles = [
   "sr"
 ];
 
-document.addEventListener("keydown", (event) => {
-  if (!event.ctrlKey || (event.key.toLowerCase() !== "l")) return;
-
-  event.preventDefault();
-
-  document.querySelector("#searchBar").focus();
-});
-
 document.querySelector("#searchForm").addEventListener("submit", async (event) => {
   event.preventDefault();
 
@@ -169,7 +161,7 @@ document.querySelector("#searchForm").addEventListener("submit", async (event) =
 
     if (![
       ...["http:", "https:", "file:", "about:"],
-      ...((await chrome.runtime.getBrowserInfo?.())?.name !== "Firefox") ? ["chrome:"] : []
+      ...(!chrome.runtime.getBrowserInfo) ? ["chrome:"] : []
     ].includes(url.protocol)) throw null;
 
     if ((url.protocol === "about:") && !/^about:blank\/?$/.test(document.querySelector("#searchBar").value) && ((await chrome.runtime.getBrowserInfo?.())?.name === "Firefox")) throw null;
@@ -191,6 +183,14 @@ document.querySelector("#searchForm").addEventListener("submit", async (event) =
 
     location.href = ((bangs.hasOwnProperty(bang)) ? bangs[bang] : "https://google.com/search?q=") + encodeURIComponent(parts.slice(Boolean(bangs.hasOwnProperty(bang))).join(" "));
   };
+});
+
+document.addEventListener("keydown", (event) => {
+  if (!event.ctrlKey || (event.key.toLowerCase() !== "l")) return;
+
+  event.preventDefault();
+
+  document.querySelector("#searchBar").focus();
 });
 
 function updateGreetingDateTime() {
