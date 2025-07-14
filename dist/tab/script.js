@@ -154,12 +154,18 @@ document.addEventListener("keydown", (event) => {
 document.querySelector("#searchForm").addEventListener("submit", (event) => {
   event.preventDefault();
 
-  const parts = document.querySelector("#searchBar").value.trim().split(" ");
-  const bang = parts[0];
+  try {
+    if (!["http:", "https:"].includes(new URL(document.querySelector("#searchBar").value).protocol)) throw null;
 
-  if (!parts.slice(Boolean(bangs.hasOwnProperty(bang))).join(" ")) return;
+    location.href = document.querySelector("#searchBar").value;
+  } catch {
+    const parts = document.querySelector("#searchBar").value.trim().split(" ");
+    const bang = parts[0];
 
-  location.href = ((bangs.hasOwnProperty(bang)) ? bangs[bang] : "https://google.com/search?q=") + encodeURIComponent(parts.slice(Boolean(bangs.hasOwnProperty(bang))).join(" "));
+    if (!parts.slice(Boolean(bangs.hasOwnProperty(bang))).join(" ")) return;
+
+    location.href = ((bangs.hasOwnProperty(bang)) ? bangs[bang] : "https://google.com/search?q=") + encodeURIComponent(parts.slice(Boolean(bangs.hasOwnProperty(bang))).join(" "));
+  };
 });
 
 function updateGreetingDateTime() {
