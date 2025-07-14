@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "AerisTab",
+  "version": "1.0.0",
+  "description": "AerisTab gives your Chrome new tab a fresh, clean look with stunning backgrounds and lightning-fast search.",
+  "chrome_url_overrides": {
+    "newtab": "tab/index.html"
+  },
+  "permissions": ["tabs"],
+  "icons": {
+    "360": "icons/360x360.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "1d238533-d8c8-4c4a-9ffe-25b01b4a7ea1",
+      "strict_min_version": "78.0"
+    }
+  }
+}
