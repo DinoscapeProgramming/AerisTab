@@ -25,7 +25,7 @@
     "aeristab"
   ],
   "author": "DinoscapeProgramming",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "type": "commonjs",
   "devDependencies": {
     "p-limit": "^6.2.0"
