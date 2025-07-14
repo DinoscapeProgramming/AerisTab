@@ -216,7 +216,9 @@ async function loadTranslations() {
 };
 
 loadTranslations().then((translations) => {
-  document.querySelector("title").textContent = (translations?.[(navigator.language || "en").split("-")[0]] || {})[document.querySelector("title").textContent];
+  if ((navigator.language || "en").split("-")[0] !== "en") {
+    document.querySelector("title").textContent = (translations?.[(navigator.language || "en").split("-")[0]] || {})[document.querySelector("title").textContent];
+  };
 
   function translateTextNode(textNode) {
     const originalText = textNode.textContent.trim();
