@@ -1,3 +1,7 @@
+if (!location.href.endsWith("?")) {
+  location.search = "";
+};
+
 const bangs = {
   "!g": "https://www.google.com/search?q=",
   "!ddg": "https://duckduckgo.com/?q=",
@@ -141,8 +145,6 @@ const languageFiles = [
   "sr"
 ];
 
-document.querySelector("#searchBar").focus();
-
 document.addEventListener("keydown", (event) => {
   if (!event.ctrlKey || (event.key.toLowerCase() !== "l")) return;
 
@@ -155,9 +157,17 @@ document.querySelector("#searchForm").addEventListener("submit", (event) => {
   event.preventDefault();
 
   try {
-    if (!["http:", "https:"].includes(new URL(document.querySelector("#searchBar").value).protocol)) throw null;
+    if (!["http:", "https:", "chrome:"].includes(new URL(document.querySelector("#searchBar").value).protocol)) throw null;
 
-    location.href = document.querySelector("#searchBar").value;
+    if (new URL(document.querySelector("#searchBar").value).protocol === "chrome:") {
+      chrome.tabs.create({
+        url: document.querySelector("#searchBar").value
+      });
+
+      document.querySelector("#searchBar").value = "";
+    } else {
+      location.href = document.querySelector("#searchBar").value;
+    };
   } catch {
     const parts = document.querySelector("#searchBar").value.trim().split(" ");
     const bang = parts[0];
