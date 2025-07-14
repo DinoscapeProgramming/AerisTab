@@ -104,8 +104,16 @@ const bangs = {
 
 document.querySelector("#searchBar").focus();
 
-document.querySelector("#searchForm").addEventListener("submit", (e) => {
-  e.preventDefault();
+document.addEventListener("keydown", (event) => {
+  if (!event.ctrlKey || (event.key.toLowerCase() !== "l")) return;
+
+  event.preventDefault();
+
+  document.querySelector("#searchBar").focus();
+});
+
+document.querySelector("#searchForm").addEventListener("submit", (event) => {
+  event.preventDefault();
 
   const parts = document.querySelector("#searchBar").value.trim().split(" ");
   const bang = parts[0];
