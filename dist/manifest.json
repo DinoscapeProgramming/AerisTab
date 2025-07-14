@@ -8,7 +8,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["locales/*.json"],
+      "resources": ["locales/*.json", "resources/*.txt"],
       "matches": ["<all_urls>"]
     }
   ],
