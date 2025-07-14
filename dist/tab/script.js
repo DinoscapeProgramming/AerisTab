@@ -161,7 +161,7 @@ document.querySelector("#searchForm").addEventListener("submit", (event) => {
 
     if (!["http:", "https:", "file:", "chrome:"].includes(url.protocol)) throw null;
 
-    if (url.protocol === "chrome:") {
+    if (["file:", "chrome:"].includes(url.protocol)) {
       chrome.tabs.create({
         url: document.querySelector("#searchBar").value
       });
