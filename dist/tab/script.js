@@ -1,5 +1,5 @@
 if (!location.href.endsWith("?")) {
-  location.search = "";
+  location.search = "?";
 };
 
 const bangs = {
@@ -157,9 +157,11 @@ document.querySelector("#searchForm").addEventListener("submit", (event) => {
   event.preventDefault();
 
   try {
-    if (!["http:", "https:", "chrome:"].includes(new URL(document.querySelector("#searchBar").value).protocol)) throw null;
+    const url = new URL(document.querySelector("#searchBar").value);
 
-    if (new URL(document.querySelector("#searchBar").value).protocol === "chrome:") {
+    if (!["http:", "https:", "chrome:"].includes(url.protocol)) throw null;
+
+    if (url.protocol === "chrome:") {
       chrome.tabs.create({
         url: document.querySelector("#searchBar").value
       });
