@@ -153,7 +153,7 @@ document.addEventListener("keydown", (event) => {
   document.querySelector("#searchBar").focus();
 });
 
-document.querySelector("#searchForm").addEventListener("submit", (event) => {
+document.querySelector("#searchForm").addEventListener("submit", async (event) => {
   event.preventDefault();
 
   if (((navigator.userAgentData?.platform === "Windows") ? /^[a-zA-Z]:\\(?:[^\\/:*?"<>|\r\n]+\\)*[^\\/:*?"<>|\r\n]*$/ : /^(\/[^\/\0]+)+\/?$/).test(document.querySelector("#searchBar").value)) {
@@ -167,9 +167,14 @@ document.querySelector("#searchForm").addEventListener("submit", (event) => {
   try {
     const url = new URL(document.querySelector("#searchBar").value);
 
-    if (!["http:", "https:", "file:", "chrome:"].includes(url.protocol)) throw null;
+    if (![
+      ...["http:", "https:", "file:", "about:"],
+      ...((await chrome.runtime.getBrowserInfo?.())?.name !== "Firefox") ? ["chrome:"] : []
+    ].includes(url.protocol)) throw null;
 
-    if (["file:", "chrome:"].includes(url.protocol)) {
+    if ((url.protocol === "about:") && !/^about:blank\/?$/.test(document.querySelector("#searchBar").value) && ((await chrome.runtime.getBrowserInfo?.())?.name === "Firefox")) throw null;
+
+    if (["file:", "about:", "chrome:"].includes(url.protocol)) {
       chrome.tabs.create({
         url: document.querySelector("#searchBar").value
       });
