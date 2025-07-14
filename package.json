@@ -1,0 +1,33 @@
+{
+  "name": "aeristab",
+  "productName": "AerisTab",
+  "version": "1.0.0",
+  "description": "Dinoscape's New Tab Page Extension",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "translate": "node scripts/translate.js"
+  },
+  "keywords": [
+    "chrome-extension",
+    "new-tab",
+    "new-tab-page",
+    "custom-new-tab",
+    "tab",
+    "browser-extension",
+    "productivity",
+    "search",
+    "background",
+    "minimalist",
+    "clean",
+    "fast",
+    "aeris",
+    "aeristab"
+  ],
+  "author": "DinoscapeProgramming",
+  "license": "Apache-2.0",
+  "type": "commonjs",
+  "devDependencies": {
+    "p-limit": "^6.2.0"
+  }
+}
