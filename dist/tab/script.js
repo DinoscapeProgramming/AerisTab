@@ -184,7 +184,7 @@ document.querySelector("#searchForm").addEventListener("submit", async (event) =
 
     if (![
       ...["http:", "https:", "about:"],
-      ...(!chrome.runtime.getBrowserInfo) ? ["file:", "chrome:"] : []
+      ...(!chrome.runtime.getBrowserInfo) ? ["data:", "blob:", "file:", "view-source:", "chrome:", "chrome-extension:", "filesystem:"] : ["moz-extension:"]
     ].includes(url.protocol)) throw null;
 
     if ((url.protocol === "about:") && !/^about:blank\/?$/.test(document.querySelector("#searchBar").value) && ((await chrome.runtime.getBrowserInfo?.())?.name === "Firefox")) {
@@ -193,12 +193,16 @@ document.querySelector("#searchForm").addEventListener("submit", async (event) =
     
     if (/^about:blank\/?$/.test(document.querySelector("#searchBar").value)) return (location.href = document.querySelector("#searchBar").value);
 
-    if (["file:", "about:", "chrome:"].includes(url.protocol)) {
-      chrome.tabs.create({
-        url: document.querySelector("#searchBar").value
-      });
+    if (["data:", "blob:", "file:", "view-source:", "about:", "chrome:", "chrome-extension:", "filesystem:", "moz-extension:"].includes(url.protocol)) {
+      try {
+        chrome.tabs.create({
+          url: document.querySelector("#searchBar").value
+        });
 
-      return window.close();
+        window.close();
+      } catch {
+        throw null;
+      };
     } else {
       if (url.hostname.split(".").length <= 1) throw null;
 
