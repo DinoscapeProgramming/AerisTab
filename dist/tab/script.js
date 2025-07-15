@@ -214,7 +214,7 @@ document.querySelector("#searchForm").addEventListener("submit", async (event) =
   };
 });
 
-document.addEventListener("keydown", (event) => {
+if (chrome.runtime.getBrowserInfo) document.addEventListener("keydown", (event) => {
   if (!event.ctrlKey || (event.key.toLowerCase() !== "l")) return;
 
   event.preventDefault();
