@@ -23,7 +23,7 @@ const bangs = {
   "!news": "https://news.google.com/search?q=",
   "!p": "https://www.pinterest.com/search/pins/?q=",
   "!gi": "https://www.google.com/search?tbm=isch&q=",
-  "!tr": "https://translate.google.com/?sl=auto&tl=en&text=",
+  "!tr": `https://translate.google.com/?sl=auto&tl=${encodeURIComponent((navigator.language || "en").split("-")[0])}&text=`,
   "!ud": "https://www.urbandictionary.com/define.php?term=",
   "!wa": "https://www.wolframalpha.com/input/?i=",
   "!thes": "https://www.thesaurus.com/browse/",
