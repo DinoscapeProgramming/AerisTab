@@ -156,7 +156,9 @@ document.querySelector("#searchForm").addEventListener("submit", async (event) =
     return window.close();
   };
 
-  if ((document.querySelector("#searchBar").value.length <= 253) && (document.querySelector("#searchBar").value.split(".").length >= 2) && (document.querySelector("#searchBar").value.split(".").length <= 127) && document.querySelector("#searchBar").value.split(".").every((label) => /^(?!-)[A-Za-z0-9-]{1,63}(?<!-)$/.test(label))) {
+  if ((document.querySelector("#searchBar").value.length <= 253) && (document.querySelector("#searchBar").value.split(".").length >= (2 - Boolean(/^localhost(:\d+)?(\/.*)?$/i.test(document.querySelector("#searchBar").value)))) && (document.querySelector("#searchBar").value.split(".").length <= 127) && document.querySelector("#searchBar").value.split(".").every((label) => /^(?!-)[A-Za-z0-9-]{1,63}(?<!-)$/.test(label))) {
+    if (/^localhost(:\d+)?(\/.*)?$/i.test(document.querySelector("#searchBar").value)) return (location.href = `http://${document.querySelector("#searchBar").value}`);
+
     let domains = JSON.parse(localStorage.getItem("domains") || "[]");
 
     if (!domains.length) {
