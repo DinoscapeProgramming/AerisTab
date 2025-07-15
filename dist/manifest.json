@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "AerisTab",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "AerisTab gives your Chrome new tab a fresh, clean look with stunning backgrounds and lightning-fast search.",
   "chrome_url_overrides": {
     "newtab": "tab/index.html"
