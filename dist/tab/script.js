@@ -198,7 +198,7 @@ document.querySelector("#searchForm").addEventListener("submit", async (event) =
         url: document.querySelector("#searchBar").value
       });
 
-      window.close();
+      return window.close();
     } else {
       if (url.hostname.split(".").length <= 1) throw null;
 
