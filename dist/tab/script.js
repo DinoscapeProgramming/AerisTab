@@ -200,6 +200,8 @@ document.querySelector("#searchForm").addEventListener("submit", async (event) =
 
       window.close();
     } else {
+      if (url.hostname.split(".").length <= 1) throw null;
+
       location.href = document.querySelector("#searchBar").value;
     };
   } catch {
