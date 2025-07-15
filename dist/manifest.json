@@ -12,9 +12,7 @@
       "matches": ["<all_urls>"]
     }
   ],
-  "permissions": [
-    "tabs"
-  ],
+  "permissions": [],
   "icons": {
     "360": "icons/360x360.png"
   },
