@@ -161,7 +161,7 @@ document.querySelector("#searchForm").addEventListener("submit", async (event) =
 
     if (/^localhost(:\d+)?(\/.*)?$/i.test(document.querySelector("#searchBar").value)) return (location.href = `http://${document.querySelector("#searchBar").value}`);
 
-    if (url.hostname.split(".").length <= 1) return;
+    if (url.hostname.split(".").length <= 1) throw null;
 
     let domains = JSON.parse(localStorage.getItem("domains") || "[]");
 
