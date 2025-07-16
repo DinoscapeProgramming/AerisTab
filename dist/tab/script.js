@@ -214,7 +214,13 @@ document.querySelector("#searchForm").addEventListener("submit", async (event) =
 
     if (!parts.slice(Boolean(bangs.hasOwnProperty(bang))).join(" ")) return;
 
-    location.href = ((bangs.hasOwnProperty(bang)) ? bangs[bang] : "https://google.com/search?q=") + encodeURIComponent(parts.slice(Boolean(bangs.hasOwnProperty(bang))).join(" "));
+    if (bangs.hasOwnProperty(bang)) {
+      location.href = bangs[bang] + encodeURIComponent(parts.slice(Boolean(bangs.hasOwnProperty(bang))).join(" "));
+    } else {
+      chrome.search.query({
+        text: document.querySelector("#searchBar").value
+      });
+    };
   };
 });
 
