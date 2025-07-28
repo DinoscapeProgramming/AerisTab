@@ -237,8 +237,8 @@ function updateGreetingDateTime() {
 
   const hour = now.getHours();
   let greeting = "Good evening";
-  if (hour >= 5 && hour < 12) greeting = "Good morning";
-  else if (hour >= 12 && hour < 18) greeting = "Good afternoon";
+  if ((hour >= 5) && (hour < 12)) greeting = "Good morning";
+  else if ((hour >= 12) && (hour < 18)) greeting = "Good afternoon";
 
   const time = now.toLocaleTimeString(navigator.language || "en-US", { hour: "2-digit", minute: "2-digit" });
   const date = now.toLocaleDateString(navigator.language || "en-US", {
