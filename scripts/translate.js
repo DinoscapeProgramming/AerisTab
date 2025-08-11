@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const pLimit = require("p-limit").default;
 
-const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+const delay = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
 const { languages, terms } = JSON.parse(fs.readFileSync(path.join(__dirname, "translate.json"), "utf8"));
 

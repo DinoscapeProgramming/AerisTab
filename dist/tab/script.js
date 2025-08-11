@@ -1,7 +1,3 @@
-if (!location.href.endsWith("?")) {
-  location.search = "?";
-};
-
 const bangs = {
   "!g": "https://www.google.com/search?q=",
   "!ddg": "https://duckduckgo.com/?q=",
